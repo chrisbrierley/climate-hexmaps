@@ -107,6 +107,8 @@ function Constituencies(id,attr){
 			lbl = '<strong>'+title+'</strong><br />Percentage of constituency on income-based<br />benefits (IS/JSA/ESA): <strong>'+(e.data.hexmap.data['benefits'][e.data.region] ? (parseFloat(e.data.hexmap.data['benefits'][e.data.region]).toFixed(2))+'%':'unknown')+'</strong>';
 		}else if(e.data.builder.by == "rural"){
 			lbl = title+'<br />Rural: '+(e.data.hexmap.data['rural'][e.data.region]+'%'||'?');
+		}else if(e.data.builder.by == "climate"){
+			lbl = title+'<br />Climate: '+(e.data.hexmap.data['climate'][e.data.region]+'%'||'?');
 		}else if(e.data.builder.by == "number_heatwave_days_change_2065"){
 			lbl = title+'<br />Change in the number of heatwave days in 2065: '+(e.data.hexmap.data['number_heatwave_days_change_2065'][e.data.region]+'%'||'?');
 		}else if(e.data.builder.by == "GE2017-candidates"){
@@ -262,7 +264,25 @@ function Constituencies(id,attr){
 		}
 
 
-		if(type == "referendum"){
+		if(type == "climate"){
+			S().ajax('data/climate.csv',{
+				'complete':function(d){
+					if(typeof d==="string"){
+						d = d.replace(/\r/,'');
+						d = d.split(/[\n]/);
+					}
+					for(var i = 1; i < d.length; i++){
+						c = d[i].split(/,/);
+						this.data[type][c[0]] = parseFloat(c[1]);
+					}
+					this.hex.data[type] = this.data[type];
+					this.setColours("climate");
+				},
+				'this': this,
+				'error':function(){},
+				'dataType':'text'
+			});
+		}else if(type == "referendum"){
 			S().ajax('../data/2016referendum-estimates.csv',{
 				'complete':function(d){
 					if(typeof d==="string"){
@@ -406,7 +426,7 @@ function Constituencies(id,attr){
 					this.setColours("GE2015-results");
 				},
 				'this': this,
-				'error':function(){},
+				'error':function(){},rural
 				'dataType':'text'
 			});
 		
@@ -444,6 +464,7 @@ function Constituencies(id,attr){
 		if(type == "GE2019-gender" && (!this.data || !this.data["GE2019-gender"])) return this.loadResults("GE2019-gender");
 		if(type == "benefits" && (!this.data || !this.data["benefits"])) return this.loadResults("benefits");
 		if(type == "rural" && (!this.data || !this.data["rural"])) return this.loadResults("rural");
+		if(type == "climate" && (!this.data || !this.data["climate"])) return this.loadResults("climate");
 
 		var key = "";
 		var names = {'Con':'Conservative','Lab':'Labour','LD':'Lib Dem','PC':'Plaid Cymru','Ind':'Independent','Spk':'Speaker'};
@@ -527,6 +548,22 @@ function Constituencies(id,attr){
 			this.hex.setColours = function(region){
 				if(typeof this.data.rural[region]==="number"){
 					var value = (this.data.rural[region] - mine)/(maxe-mine);
+					if(value < 0) value = 0;
+					if(value > 1) value = 1;
+					return getColour(value,a,b);
+				}else{
+					return "#ffffff";
+				}
+			};
+			key = '&le;'+mine+'<span style="'+makeGradient(a,b)+';width: 10em; height: 1em;display: inline-block;margin: 0 0.25em;"></span>&ge;'+maxe;
+		}else if(type == "climate"){
+			var b = new Colour('#0DBC37');
+			var a = new Colour('#000000');
+			var mine = 0;
+			var maxe = 100;
+			this.hex.setColours = function(region){
+				if(typeof this.data.climate[region]==="number"){
+					var value = (this.data.climate[region] - mine)/(maxe-mine);
 					if(value < 0) value = 0;
 					if(value > 1) value = 1;
 					return getColour(value,a,b);
