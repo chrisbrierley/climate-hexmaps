@@ -107,6 +107,8 @@ function Constituencies(id,attr){
 			lbl = '<strong>'+title+'</strong><br />Percentage of constituency on income-based<br />benefits (IS/JSA/ESA): <strong>'+(e.data.hexmap.data['benefits'][e.data.region] ? (parseFloat(e.data.hexmap.data['benefits'][e.data.region]).toFixed(2))+'%':'unknown')+'</strong>';
 		}else if(e.data.builder.by == "rural"){
 			lbl = title+'<br />Rural: '+(e.data.hexmap.data['rural'][e.data.region]+'%'||'?');
+		}else if(e.data.builder.by == "number_heatwave_days_change_2065"){
+			lbl = title+'<br />Change in the number of heatwave days in 2065: '+(e.data.hexmap.data['number_heatwave_days_change_2065'][e.data.region]+'%'||'?');
 		}else if(e.data.builder.by == "GE2017-candidates"){
 			lbl = '<span style="border-bottom:1px solid #333;margin-bottom:0.25em;display:inline-block;">'+title+'</span>';
 			var c = e.data.hexmap.data['GE2017-candidates'][e.data.region];
@@ -322,7 +324,7 @@ function Constituencies(id,attr){
 				'dataType':'text'
 			});
 		}else if(type == "rural"){
-			S().ajax('../data/2011rural.csv',{
+			S().ajax('data/2011rural.csv',{
 				'complete':function(d,attr){
 					if(typeof d==="string"){
 						d = d.replace(/\r/g,'');
@@ -390,7 +392,7 @@ function Constituencies(id,attr){
 				}
 			});
 		}else{
-			S().ajax('../data/2015results.csv',{
+			S().ajax('data/2015results.csv',{
 				'complete':function(d){
 					if(typeof d==="string"){
 						d = d.replace(/\r/,'');

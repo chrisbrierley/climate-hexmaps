@@ -10,12 +10,12 @@
 	<meta name="twitter:title" property="og:title" content="Climate change by constituency over Great Britian">
 	<meta name="twitter:description" property="og:description" content="The 2017 UK parliamentary constituencies as a point-topped hex map.">
 	<meta name="twitter:image" property="og:image" content="https://odileeds.org/projects/hexmaps/hexmap.png">
-	<link rel="StyleSheet" href="../resources/style.css" type="text/css" />
-	<script type="text/javascript" src="../resources/stuquery.js"></script>
-	<script type="text/javascript" src="../resources/stuquery.svg.js"></script>
+	<link rel="StyleSheet" href="resources/style.css" type="text/css" />
+	<script type="text/javascript" src="resources/stuquery.js"></script>
+	<script type="text/javascript" src="resources/stuquery.svg.js"></script>
 	<!--<script type="text/javascript" src="../hexmaps/resources/stuquery.hexmap.js"></script>-->
-	<script type="text/javascript" src="../resources/stuquery.hexmap.js"></script>
-	<script type="text/javascript" src="../resources/constituencies.js"></script>
+	<script type="text/javascript" src="resources/stuquery.hexmap.js"></script>
+	<script type="text/javascript" src="resources/constituencies.js"></script>
 	<script>
 	var constituencies;
 	S(document).ready(function(){
@@ -23,7 +23,7 @@
 			'width':915,
 			'height':1120,
 			'padding':0,
-			'file':'../maps/constituencies.hexjson',
+			'file':'climate_projections.hexjson',
 			'search':{'id':'search'}
 		});
 	});
@@ -136,12 +136,12 @@
 			</div>
 		</header>
 
-		<div class="message c14-bg">⚠️ <a href="../ge2019/">View our live results map for the 2019 General Election</a> ⚠️</div>
 		<div class="holder">
 			<p><a href="https://odileeds.org/blog/2017-05-08-mapping-election-with-hexes">We've created a (pointy-topped) hex map</a> of UK parliamentary constituencies to show each constituency with equal visual weight. Obviously we've had to make some compromises but <a href="https://github.com/odileeds/hexmaps/blob/gh-pages/maps/constituencies.hexjson">the hex layout is open</a> if you want to make changes. Below you can see data from a variety of sources. We've also made a <a href="https://odileeds.org/projects/petitions/">constituency hex map for UK Parliament petitions</a> and a <a href="https://odileeds.org/projects/divisions/">constituency hex map for House of Commons Divisions</a>.</p>
 			<form>
 				<label style="text-align:center;">Colour by:</label>
 				<select id="data-selector">
+					<option class="switchdata b5-bg" value="number_heatwave_days_change_2065">Change in heatwave days in 2065</option>
 					<option class="switchdata b5-bg" value="population">Population</option>
 					<option class="switchdata b5-bg" value="electorate">Electorate</option>
 					<option class="switchdata c10-bg" selected="selected" value="region">Region</option>
