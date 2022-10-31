@@ -429,7 +429,6 @@ function Constituencies(id,attr){
 				'error':function(){},rural
 				'dataType':'text'
 			});
-		
 		}
 	}
 
