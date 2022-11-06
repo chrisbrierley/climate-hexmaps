@@ -283,7 +283,7 @@ function Constituencies(id,attr){
 				'dataType':'text'
 			});
 		}else if(type == "referendum"){
-			S().ajax('../data/2016referendum-estimates.csv',{
+			S().ajax('data/2016referendum-estimates.csv',{
 				'complete':function(d){
 					if(typeof d==="string"){
 						d = d.replace(/\r/,'');
@@ -301,7 +301,7 @@ function Constituencies(id,attr){
 				'dataType':'text'
 			});
 		}else if(type == "GE2017-candidates" || type == "GE2017-gender"){
-			S().ajax('../data/2017ge-candidates.json',{
+			S().ajax('data/2017ge-candidates.json',{
 				'type': type,
 				'complete':function(d,attr){
 					for(var pcd in d){
@@ -326,7 +326,7 @@ function Constituencies(id,attr){
 				'dataType':'json'
 			});
 		}else if(type == "benefits"){
-			S().ajax('../data/2017benefits.csv',{
+			S().ajax('data/2017benefits.csv',{
 				'complete':function(d){
 					if(typeof d==="string"){
 						d = d.replace(/\r/g,'');
@@ -426,7 +426,7 @@ function Constituencies(id,attr){
 					this.setColours("GE2015-results");
 				},
 				'this': this,
-				'error':function(){},rural
+				'error':function(){},
 				'dataType':'text'
 			});
 		}
